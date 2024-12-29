@@ -5,17 +5,13 @@ import { CreateCatDto } from '../dto/create-cat.dto';
 
 @Injectable()
 export class CatsService {
-  constructor(
-    @Inject('CAT_MODEL')
-    private catModel: Model<Cat>,
-  ) {}
+  constructor(private readonly cats: Cat[] = []) {}
 
-  async create(createCatDto: CreateCatDto): Promise<Cat> {
-    const createdCat = new this.catModel(createCatDto);
-    return createdCat.save();
+  create(cat: Cat) {
+    this.cats.push(cat);
   }
 
-  async findAll(): Promise<Cat[]> {
-    return this.catModel.find().exec();
+  findAll(): Cat[] {
+    return this.cats;
   }
 }
